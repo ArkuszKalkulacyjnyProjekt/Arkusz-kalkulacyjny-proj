@@ -1,9 +1,9 @@
-$("td").dblclick(function() {
+$(document).on('dblclick', "td", function() {
 	$(this).children("input").show().focus();
 	$(this).children("div").hide();
 });
 
-$("input.input").focusout( function() {
+$(document).on('focusout', "input.input", function() {
 	$(this).hide();
 	$(this).siblings("div").show();
 });
