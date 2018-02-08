@@ -1,8 +1,12 @@
 "use strict";
 
-app.controller("spreadsheetController", ["$scope", "$parse", "spreadsheetFactory",
-    function($scope, $parse, $spreadsheetFactory) {
+app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadsheetFactory",
+    function($scope, $parse, $http, $spreadsheetFactory) {
         $scope.spreadsheetFactory = $spreadsheetFactory;
+        $http.get('php/cells.php').then(function (response) {
+            console.log(response.data);
+            $scope.spreadsheetFactory.cells = response.data;
+        });
 
         $scope.resolveReferenceToCells = function (cellContent) {
             cellContent = cellContent.replace("=", "");
@@ -37,6 +41,7 @@ app.controller("spreadsheetController", ["$scope", "$parse", "spreadsheetFactory
             if (cellContent.charAt(0) == "=") {
                 var resolveFormula = $scope.resolveReferenceToCells(cellContent);
                 var result = $parse(resolveFormula)($scope);
+                console.log($scope.spreadsheetFactory.cells);
                 return result;
             }
             return cellContent;

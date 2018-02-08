@@ -1,0 +1,6 @@
+1. Plik 127_0_0_1.sql zawiera zrzut całej bazy. Importujemy go wchodząc do czystego phpmyadmina i nie wybierając żadnej bazy klikamy w zakładke import wybieramy plik i nic nie zmianiając importujemy.
+
+!!! Wrzuciłem też samą tabele bo czasami importowanie całej bazy w phpmyadmin mnie zawodziło. Jeśli uda wam sie zaimportowac pierwszy plik i pojawia sie baza z tabelą to znak, że wszytsko jest okej i import drugiego pliku jest niepotrzebny.
+
+2. Drugi plik spreadsheet_base.sql to zrzut samej tabeli. Importujemy go tworząc bazę o nazwie spreadsheet_base w phpmyadmin, a nastepnie wybieramy stworzoną bazę i wtedy klikamy w zakładkę importuj wskazujemy plik i nic nie zmianiając importujemy. 
+
