@@ -46,5 +46,17 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
             }
             return cellContent;
         }
+
+        $scope.updateCells = function(){
+            $http.post('php/save.php', {json: $scope.spreadsheetFactory.cells})
+                .then(
+                    function(response){
+                        console.log(response.data)
+                    },
+                    function(response){
+                        console.log(response);
+                    }
+                );
+        }
         
     }]);

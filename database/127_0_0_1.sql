@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 08 Lut 2018, 00:52
+-- Czas generowania: 09 Lut 2018, 00:32
 -- Wersja serwera: 10.1.21-MariaDB
 -- Wersja PHP: 5.6.30
 
@@ -39,8 +39,10 @@ CREATE TABLE `cells` (
 --
 
 INSERT INTO `cells` (`id`, `name`, `value`) VALUES
-(1, 'A2', '15'),
-(2, 'D20', '-8');
+(12, 'A2', '15'),
+(13, 'D20', '-8'),
+(14, 'G7', '11'),
+(15, 'I11', '6');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -50,7 +52,8 @@ INSERT INTO `cells` (`id`, `name`, `value`) VALUES
 -- Indexes for table `cells`
 --
 ALTER TABLE `cells`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -60,7 +63,7 @@ ALTER TABLE `cells`
 -- AUTO_INCREMENT dla tabeli `cells`
 --
 ALTER TABLE `cells`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

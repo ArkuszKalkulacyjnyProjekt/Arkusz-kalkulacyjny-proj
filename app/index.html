@@ -28,7 +28,7 @@
         <tr ng-repeat="row in spreadsheetFactory.rows">
           <td ng-bind="row"></td>
           <td ng-repeat="column in spreadsheetFactory.columns">
-            <input class="input" type="text" ng-model="spreadsheetFactory.cells[column+row]"/><div class="output" ng-bind="computeCell(column+row)"></div>
+            <input class="input" type="text" ng-model="spreadsheetFactory.cells[column+row]" ng-blur="updateCells()"/><div class="output" ng-bind="computeCell(column+row)"></div>
           </td>
         </tr>
       </tbody>

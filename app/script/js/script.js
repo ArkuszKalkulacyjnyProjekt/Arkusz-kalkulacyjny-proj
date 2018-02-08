@@ -3,7 +3,7 @@ $(document).on('dblclick', "td", function() {
 	$(this).children("div").hide();
 });
 
-$(document).on('focusout', "input.input", function() {
+$(document).on('blur', "input.input", function() {
 	$(this).hide();
 	$(this).siblings("div").show();
 });
