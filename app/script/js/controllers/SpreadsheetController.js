@@ -40,21 +40,48 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
             if (typeof cellContent === 'undefined'){
                 return cellContent;
             }
-
+			var string = cellContent,
+				sum = "SUM",
+				dif = "DIF",
+				mul = "MUL",
+				div = "DIV";
+				
+			if (string.includes(sum))
+			{
+				cellContent = cellContent.replace("SUM(", "=");
+				cellContent = cellContent.replace(",", "+");
+				cellContent = cellContent.replace(")", "");
+				console.log(cellContent);
+				return calculate(cellContent, cell); 
+			}
+			else if (string.includes(dif))
+			{
+				cellContent = cellContent.replace("DIF(", "=");
+				cellContent = cellContent.replace(",", "-");
+				cellContent = cellContent.replace(")", "");
+				console.log(cellContent);
+				return calculate(cellContent, cell);
+			}
+			else if (string.includes(mul))
+			{
+				cellContent = cellContent.replace("MUL(", "=");
+				cellContent = cellContent.replace(",", "*");
+				cellContent = cellContent.replace(")", "");
+				console.log(cellContent);
+				return calculate(cellContent, cell);	
+			}
+			else if (string.includes(div))
+			{
+				cellContent = cellContent.replace("DIV(", "=");
+				cellContent = cellContent.replace(",", "/");
+				cellContent = cellContent.replace(")", "");
+				console.log(cellContent);
+				return calculate(cellContent, cell);
+			}
+			
+		
             if (cellContent.charAt(0) == "=") {
-                try {
-                    var resolveFormula = $scope.resolveReferenceToCells(cellContent, cell);
-
-                    if(resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("-") > -1 || resolveFormula.indexOf("*") > -1 || resolveFormula.indexOf("/") > -1){
-                        var result = $parse(resolveFormula)($scope);
-                        return (result) ? result : "err" ;
-                    }else {
-                        return resolveFormula;
-                    }
-                }catch (err){
-                    console.log(err);
-                    return "err";
-                }
+				return calculate(cellContent, cell)
             }
             return cellContent;
         };
@@ -70,5 +97,22 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
                     }
                 );
         };
+		
+		
+		function calculate(cellContent, cell) {
+			try {
+				var resolveFormula = $scope.resolveReferenceToCells(cellContent, cell);
+				//console.log(resolveFormula);
+				if(resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("-") > -1 || resolveFormula.indexOf("*") > -1 || resolveFormula.indexOf("/") > -1){
+					var result = $parse(resolveFormula)($scope);
+					return (result) ? result : "err" ;
+				}else {
+					return resolveFormula;
+				}
+			}catch (err){
+				console.log(err);
+				return "err";
+			}			
+		}
         
     }]);
