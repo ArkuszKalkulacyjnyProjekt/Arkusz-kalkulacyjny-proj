@@ -4,24 +4,27 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
     function($scope, $parse, $http, $spreadsheetFactory) {
         $scope.spreadsheetFactory = $spreadsheetFactory;
         $http.get('php/cells.php').then(function (response) {
-            console.log(response.data);
             $scope.spreadsheetFactory.cells = response.data;
         });
 
-        $scope.resolveReferenceToCells = function (cellContent) {
+        $scope.resolveReferenceToCells = function (cellContent, cell) {
+            if (cellContent.charAt(0) != '='){
+                return cellContent;
+            }
             cellContent = cellContent.replace("=", "");
-
             var finalCellContent = cellContent;
 
             var matches = cellContent.match(/[A-Z]\d+/g);
-            console.log(matches);
             if (matches != null) {
+                if(matches.indexOf(cell) > -1)
+                    throw new Error("Error: reference to itself");
+
                 for (var i = 0; i < matches.length; i++) {
                     var referenceCellContent = $scope.spreadsheetFactory.cells[matches[i]];
                     if (typeof referenceCellContent === 'undefined' || referenceCellContent === '') {
                         referenceCellContent = 0;
                     } else {
-                        referenceCellContent = $scope.resolveReferenceToCells(referenceCellContent);
+                        referenceCellContent = $scope.resolveReferenceToCells(referenceCellContent, matches[i]);
                     }
 
                     finalCellContent = finalCellContent.replace(matches[i], referenceCellContent);
@@ -39,13 +42,22 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
             }
 
             if (cellContent.charAt(0) == "=") {
-                var resolveFormula = $scope.resolveReferenceToCells(cellContent);
-                var result = $parse(resolveFormula)($scope);
-                console.log($scope.spreadsheetFactory.cells);
-                return result;
+                try {
+                    var resolveFormula = $scope.resolveReferenceToCells(cellContent, cell);
+
+                    if(resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("-") > -1 || resolveFormula.indexOf("*") > -1 || resolveFormula.indexOf("/") > -1){
+                        var result = $parse(resolveFormula)($scope);
+                        return (result) ? result : "err" ;
+                    }else {
+                        return resolveFormula;
+                    }
+                }catch (err){
+                    console.log(err);
+                    return "err";
+                }
             }
             return cellContent;
-        }
+        };
 
         $scope.updateCells = function(){
             $http.post('php/save.php', {json: $scope.spreadsheetFactory.cells})
@@ -57,6 +69,6 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
                         console.log(response);
                     }
                 );
-        }
+        };
         
     }]);
