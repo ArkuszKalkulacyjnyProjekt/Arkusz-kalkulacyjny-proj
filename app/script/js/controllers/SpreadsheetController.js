@@ -42,7 +42,7 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
 			}
 			
 			
-			console.log("cellContent" + cellContent);
+			//console.log("cellContent" + cellContent);
             cellContent = cellContent.replace("=", "");
             var finalCellContent = cellContent;
 
@@ -57,6 +57,7 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
                         referenceCellContent = 0;
                     } else {
                         referenceCellContent = $scope.resolveReferenceToCells(referenceCellContent, matches[i]);
+						referenceCellContent = "(" + referenceCellContent + ")";
                     }
 
                     finalCellContent = finalCellContent.replace(matches[i], referenceCellContent);
@@ -95,8 +96,8 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
 		function calculate(cellContent, cell) {
 			try {
 				var resolveFormula = $scope.resolveReferenceToCells(cellContent, cell);
-				//console.log(resolveFormula);
-				if(resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("-") > -1 || resolveFormula.indexOf("*") > -1 || resolveFormula.indexOf("/") > -1){
+				console.log(resolveFormula);
+				if(resolveFormula.indexOf("+") > -1 || resolveFormula.indexOf("-") > -1 || resolveFormula.indexOf("*") > -1 || resolveFormula.indexOf("/") > -1){
 					var result = $parse(resolveFormula)($scope);
 					return (result) ? result : "err" ;
 				}else {
