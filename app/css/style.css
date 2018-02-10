@@ -8,5 +8,17 @@ td:hover {
 
 .input {
 	display: none;
-	width: 100%;
+}
+
+th {
+	min-width: 100px;
+}
+th#first-th {
+	min-width: 30px;
+	width: 30px;
+	height: 100%;
+}
+
+td.row-index {
+	font-weight: bold;
 }

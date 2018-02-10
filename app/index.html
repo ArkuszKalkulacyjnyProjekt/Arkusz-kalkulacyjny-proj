@@ -22,11 +22,11 @@
     <div class="col-md-12">
     <table class="table-bordered" style="width: 100%;" id="spreadsheet-table" ng-controller="spreadsheetController">
       <thead>
-        <tr><th></th><th ng-repeat="column in spreadsheetFactory.columns" ng-bind="column"></th></tr>
+        <tr><th id="first-th"></th><th class="text-center" ng-repeat="column in spreadsheetFactory.columns" ng-bind="column"></th></tr>
       </thead>
       <tbody>
         <tr ng-repeat="row in spreadsheetFactory.rows">
-          <td ng-bind="row"></td>
+          <td ng-bind="row" class="row-index text-center"></td>
           <td ng-repeat="column in spreadsheetFactory.columns">
             <input class="input" type="text" ng-model="spreadsheetFactory.cells[column+row]" ng-blur="updateCells()"/><div class="output" ng-bind="computeCell(column+row)"></div>
           </td>
