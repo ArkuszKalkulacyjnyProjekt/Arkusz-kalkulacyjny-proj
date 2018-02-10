@@ -42,16 +42,20 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
 			}
 			
 			
-			//console.log("cellContent" + cellContent);
+			
             cellContent = cellContent.replace("=", "");
             var finalCellContent = cellContent;
 
             var matches = cellContent.match(/[A-Z]\d+/g);
+			console.log("matches" + matches);
             if (matches != null) {
                 if(matches.indexOf(cell) > -1)
                     throw new Error("Error: reference to itself");
-
                 for (var i = 0; i < matches.length; i++) {
+					//console.log("matche[I]" + matches[i]);
+					var cell = matches[i];
+					if (cell.charAt(0).charCodeAt() > 85 || cell.substr(1) > 20 )
+						throw new Error("Error: reference to not existing cell");
                     var referenceCellContent = $scope.spreadsheetFactory.cells[matches[i]];
                     if (typeof referenceCellContent === 'undefined' || referenceCellContent === '') {
                         referenceCellContent = 0;
@@ -63,7 +67,10 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
                     finalCellContent = finalCellContent.replace(matches[i], referenceCellContent);
                 }
             }
-
+			else{
+				throw new Error("Error: reference to not existing cell");
+			}
+			
             return finalCellContent;
         };
 
