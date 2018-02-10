@@ -7,3 +7,5 @@ $(document).on('blur', "input.input", function() {
 	$(this).hide();
 	$(this).siblings("div").show();
 });
+
+
