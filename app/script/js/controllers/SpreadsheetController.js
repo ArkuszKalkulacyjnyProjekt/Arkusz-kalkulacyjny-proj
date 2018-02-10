@@ -82,12 +82,6 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
             if (cellContent.charAt(0) == "=") {
 				cellContent = $scope.calculate(cellContent, cell)
             }
-            if (cellContent === "err"){
-                $scope.turnRed()
-            }else {
-            	$scope.turnDefault()}
-
-
             return cellContent;
         };
 
