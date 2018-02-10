@@ -11,6 +11,38 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
             if (cellContent.charAt(0) != '='){
                 return cellContent;
             }
+			var string = cellContent,
+				sum = "SUM",
+				dif = "DIF",
+				mul = "MUL",
+				div = "DIV";
+			if (cellContent.includes(sum))
+			{
+				cellContent = cellContent.replace("=SUM(", "=");
+				cellContent = cellContent.replace(",", "+");
+				cellContent = cellContent.replace(")", ""); 
+			}
+			else if (cellContent.includes(dif))
+			{
+				cellContent = cellContent.replace("=DIF(", "=");
+				cellContent = cellContent.replace(",", "-");
+				cellContent = cellContent.replace(")", "");
+			}
+			else if (cellContent.includes(mul))
+			{
+				cellContent = cellContent.replace("=MUL(", "=");
+				cellContent = cellContent.replace(",", "*");
+				cellContent = cellContent.replace(")", "");
+			}
+			else if (cellContent.includes(div))
+			{
+				cellContent = cellContent.replace("=DIV(", "=");
+				cellContent = cellContent.replace(",", "/");
+				cellContent = cellContent.replace(")", "");
+			}
+			
+			
+			console.log("cellContent" + cellContent);
             cellContent = cellContent.replace("=", "");
             var finalCellContent = cellContent;
 
@@ -39,46 +71,7 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
 
             if (typeof cellContent === 'undefined'){
                 return cellContent;
-            }
-			var string = cellContent,
-				sum = "SUM",
-				dif = "DIF",
-				mul = "MUL",
-				div = "DIV";
-				
-			if (string.includes(sum))
-			{
-				cellContent = cellContent.replace("SUM(", "=");
-				cellContent = cellContent.replace(",", "+");
-				cellContent = cellContent.replace(")", "");
-				console.log(cellContent);
-				return calculate(cellContent, cell); 
-			}
-			else if (string.includes(dif))
-			{
-				cellContent = cellContent.replace("DIF(", "=");
-				cellContent = cellContent.replace(",", "-");
-				cellContent = cellContent.replace(")", "");
-				console.log(cellContent);
-				return calculate(cellContent, cell);
-			}
-			else if (string.includes(mul))
-			{
-				cellContent = cellContent.replace("MUL(", "=");
-				cellContent = cellContent.replace(",", "*");
-				cellContent = cellContent.replace(")", "");
-				console.log(cellContent);
-				return calculate(cellContent, cell);	
-			}
-			else if (string.includes(div))
-			{
-				cellContent = cellContent.replace("DIV(", "=");
-				cellContent = cellContent.replace(",", "/");
-				cellContent = cellContent.replace(")", "");
-				console.log(cellContent);
-				return calculate(cellContent, cell);
-			}
-			
+            }		
 		
             if (cellContent.charAt(0) == "=") {
 				return calculate(cellContent, cell)
