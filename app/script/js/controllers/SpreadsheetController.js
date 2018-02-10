@@ -18,27 +18,23 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
 				div = "DIV";
 			if (cellContent.includes(sum))
 			{
-				cellContent = cellContent.replace("=SUM(", "=");
+				cellContent = cellContent.replace("=SUM(", "=(");
 				cellContent = cellContent.replaceAll(",", "+");
-				cellContent = cellContent.replace(")", ""); 
 			}
 			else if (cellContent.includes(dif))
 			{
-				cellContent = cellContent.replace("=DIF(", "=");
+				cellContent = cellContent.replace("=DIF(", "=(");
 				cellContent = cellContent.replace(",", "-");
-				cellContent = cellContent.replace(")", "");
 			}
 			else if (cellContent.includes(mul))
 			{
-				cellContent = cellContent.replace("=MUL(", "=");
+				cellContent = cellContent.replace("=MUL(", "=(");
 				cellContent = cellContent.replace(",", "*");
-				cellContent = cellContent.replace(")", "");
 			}
 			else if (cellContent.includes(div))
 			{
-				cellContent = cellContent.replace("=DIV(", "=");
+				cellContent = cellContent.replace("=DIV(", "=(");
 				cellContent = cellContent.replace(",", "/");
-				cellContent = cellContent.replace(")", "");
 			}
 			
 			
@@ -48,16 +44,21 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
 
             var matches = cellContent.match(/[A-Z]\d+/g);
 			console.log("matches" + matches);
-            if (matches != null) {
+
+			if (matches != null) {
                 if(matches.indexOf(cell) > -1)
                     throw new Error("Error: reference to itself");
+
                 for (var i = 0; i < matches.length; i++) {
 					//console.log("matche[I]" + matches[i]);
 					var matchedCell = matches[i];
 					var row = parseInt(matchedCell.substr(1));
+
 					if ($scope.spreadsheetFactory.columns.indexOf(matchedCell.charAt(0)) < 0 || $scope.spreadsheetFactory.rows.indexOf(row) < 0 )
 						throw new Error("Error: reference to not existing cell");
+
                     var referenceCellContent = $scope.spreadsheetFactory.cells[matches[i]];
+
                     if (typeof referenceCellContent === 'undefined' || referenceCellContent === '') {
                         referenceCellContent = 0;
                     } else {
