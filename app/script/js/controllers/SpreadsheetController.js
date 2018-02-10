@@ -19,7 +19,7 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
 			if (cellContent.includes(sum))
 			{
 				cellContent = cellContent.replace("=SUM(", "=");
-				cellContent = cellContent.replace(",", "+");
+				cellContent = cellContent.replaceAll(",", "+");
 				cellContent = cellContent.replace(")", ""); 
 			}
 			else if (cellContent.includes(dif))
@@ -92,6 +92,12 @@ app.controller("spreadsheetController", ["$scope", "$parse", "$http", "spreadshe
                 );
         };
 		
+		String.prototype.replaceAll = function(search, replace) {
+			if (replace === undefined) {
+				return this.toString();
+			}
+			return this.split(search).join(replace);
+		}
 		
 		function calculate(cellContent, cell) {
 			try {
