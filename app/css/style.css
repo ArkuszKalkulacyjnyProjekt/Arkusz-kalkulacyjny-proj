@@ -12,13 +12,19 @@ td:hover {
 
 th {
 	min-width: 100px;
+	border-color: #cecece;
+    background: #f8f8f8;
 }
 th#first-th {
 	min-width: 30px;
 	width: 30px;
 	height: 100%;
+	border-color: #cecece;
+	background: #f8f8f8;
 }
 
 td.row-index {
 	font-weight: bold;
+	border-color: #cecece;
+    background: #f8f8f8;
 }
