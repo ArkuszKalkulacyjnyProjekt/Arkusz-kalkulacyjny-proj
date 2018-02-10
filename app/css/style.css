@@ -17,13 +17,12 @@ th {
 }
 th#first-th {
 	min-width: 30px;
-	width: 30px;
-	height: 100%;
 	border-color: #cecece;
 	background: #f8f8f8;
 }
 
 td.row-index {
+	min-width: 30px;
 	font-weight: bold;
 	border-color: #cecece;
     background: #f8f8f8;
